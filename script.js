@@ -1,9 +1,4 @@
-/**
- * Modern Portfolio - Main Script
- * Created by: Mohamed Nabil
- */
-
-// 1. Smooth scrolling for navigation links
+// Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -17,7 +12,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// 2. Mobile menu toggle logic
+// Mobile menu toggle
 const menuToggle = document.getElementById('menu-toggle');
 const mobileMenu = document.getElementById('mobile-menu');
 
@@ -27,7 +22,7 @@ if (menuToggle && mobileMenu) {
     });
 }
 
-// 3. Back to top button functionality
+// Back to top button
 const backToTopButton = document.getElementById('back-to-top');
 if (backToTopButton) {
     window.addEventListener('scroll', () => {
@@ -46,7 +41,7 @@ if (backToTopButton) {
     });
 }
 
-// 4. Active navigation link highlighting on scroll
+// Active navigation link highlighting
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-link');
 
@@ -68,70 +63,77 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// 5. Professional Contact Form handling with EmailJS (NO ALERTS)
+// Contact form submission using EmailJS
 document.addEventListener('DOMContentLoaded', function() {
-    // تفعيل مفتاح الـ Public Key الخاص بك
-    emailjs.init("mfC5t03UXNHKJgp6z"); 
-
-    const contactForm = document.getElementById('contact-form') || document.querySelector('form');
+    const contactForm = document.querySelector('form');
     const submitBtn = document.getElementById('submit-btn');
     const loadingSpinner = document.getElementById('loading-spinner');
     const successMessage = document.getElementById('success-message');
     const errorMessage = document.getElementById('error-message');
 
-    if (!contactForm) return;
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-    contactForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+            // Hide any previous messages
+            successMessage.classList.add('hidden');
+            errorMessage.classList.add('hidden');
 
-        // إخفاء أي رسائل سابقة
-        successMessage.classList.add('hidden');
-        errorMessage.classList.add('hidden');
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+            loadingSpinner.classList.remove('hidden');
 
-        // تجهيز حالة الزر والـ Spinner
-        const originalBtnText = submitBtn.innerHTML;
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = 'Sending...';
-        loadingSpinner.classList.remove('hidden');
+            // Initialize EmailJS with your public key
+            emailjs.init('mfC5t03UXNHKJgp6z');
 
-        // تجميع البيانات من الحقول
-        const templateParams = {
-            from_name: document.getElementById('name').value,
-            from_email: document.getElementById('email').value,
-            subject: document.getElementById('subject').value,
-            message: document.getElementById('message').value
-        };
+            // Prepare template parameters
+            const templateParams = {
+                from_name: document.getElementById('name').value,
+                from_email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+                to_email: 'mohamed2nabil5@gmail.com'
+            };
 
-        // إرسال الإيميل عبر EmailJS
-        emailjs.send('service_blzsh87', 'template_bqdqgsp', templateParams)
-            .then(function(response) {
-                console.log('SUCCESS!', response.status, response.text);
-                
-                // 1. إخفاء الـ Spinner
-                loadingSpinner.classList.add('hidden');
-                
-                // 2. إظهار رسالة النجاح (علامة الصح) الموجودة في الـ HTML
-                successMessage.classList.remove('hidden');
-                
-                // 3. إعادة الزر لحالته الطبيعية وتفريغ الفورم
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
-                contactForm.reset();
+            // Send the email using send method with explicit parameters
+            emailjs.send('service_blzsh87', 'template_bqdqgsp', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
 
-                // إخفاء رسالة النجاح تلقائياً بعد 6 ثوانٍ
-                setTimeout(() => {
-                    successMessage.classList.add('hidden');
-                }, 6000);
+                    // Hide loading state
+                    loadingSpinner.classList.add('hidden');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Send Message <i class="fas fa-paper-plane ml-2"></i>';
 
-            }, function(error) {
-                console.error('FAILED...', error);
-                
-                // إخفاء الـ Spinner وإظهار رسالة الخطأ
-                loadingSpinner.classList.add('hidden');
-                errorMessage.classList.remove('hidden');
-                
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
-            });
-    });
+                    // Show success message
+                    successMessage.classList.remove('hidden');
+
+                    // Reset form
+                    contactForm.reset();
+
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.classList.add('hidden');
+                    }, 5000);
+
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    console.log('Error details:', JSON.stringify(error, null, 2));
+
+                    // Hide loading state
+                    loadingSpinner.classList.add('hidden');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Send Message <i class="fas fa-paper-plane ml-2"></i>';
+
+                    // Show error message
+                    errorMessage.classList.remove('hidden');
+
+                    // Hide error message after 5 seconds
+                    setTimeout(() => {
+                        errorMessage.classList.add('hidden');
+                    }, 5000);
+                });
+        });
+    }
 });
