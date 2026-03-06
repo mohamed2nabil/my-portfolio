@@ -155,6 +155,15 @@ body {
     .hero-buttons a {
         width: 100%;
         text-align: center;
+        padding: 12px 24px;
+    }
+    
+    /* Make both buttons have equal size and style */
+    .hero-buttons .btn-primary,
+    .hero-buttons .border-primary {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
