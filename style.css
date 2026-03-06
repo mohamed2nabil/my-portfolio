@@ -267,3 +267,55 @@ body {
         margin-left: 0;
     }
 }
+/* Social Icon Buttons - Hero section (small circles) */
+.social-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+    border-radius: 50% !important;
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    font-size: 18px !important;
+    transition: all 0.3s ease !important;
+    box-sizing: border-box !important;
+    text-decoration: none !important;
+    flex-shrink: 0 !important;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px) !important;
+    background-color: #0ea5e9 !important;
+    box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3) !important;
+    color: #ffffff !important;
+}
+
+/* Follow Me section - full width uniform pills */
+.social-icon-full {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
+    border-radius: 9999px !important;
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    font-size: 20px !important;
+    transition: all 0.3s ease !important;
+    box-sizing: border-box !important;
+    text-decoration: none !important;
+}
+
+.social-icon-full:hover {
+    transform: translateY(-3px) !important;
+    background-color: #0ea5e9 !important;
+    box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3) !important;
+    color: #ffffff !important;
+}
